@@ -373,6 +373,62 @@ x=\frac{D_x}{D}=\frac{180}{4}=\boxed{45}
 \]
 \end{frame}
 
+% Desarrollo completo agregado para explicar de dónde sale el valor de Dx.
+\begin{frame}[shrink=10]{Desarrollo completo de $D_x$: expansión por cofactores}
+Se reemplaza la columna de $x$ por el vector $B$:
+\[
+D_x=\detm{
+95&1&1&1\\
+125&1&0&1\\
+110&2&1&0\\
+85&1&2&3}
+\]
+
+Se expande por la primera columna:
+\[
+\begin{aligned}
+D_x={}&95\detm{1&0&1\\2&1&0\\1&2&3}
+-125\detm{1&1&1\\2&1&0\\1&2&3}\\
+&+110\detm{1&1&1\\1&0&1\\1&2&3}
+-85\detm{1&1&1\\1&0&1\\2&1&0}
+\end{aligned}
+\]
+\end{frame}
+
+\begin{frame}[shrink=17]{Desarrollo completo de $D_x$: menores $3\times3$}
+\[
+\begin{aligned}
+D_x={}&95\left[1\detm{1&0\\2&3}-0\detm{2&0\\1&3}+1\detm{2&1\\1&2}\right]\\
+&-125\left[1\detm{1&0\\2&3}-1\detm{2&0\\1&3}+1\detm{2&1\\1&2}\right]\\
+&+110\left[1\detm{0&1\\2&3}-1\detm{1&1\\1&3}+1\detm{1&0\\1&2}\right]\\
+&-85\left[1\detm{0&1\\1&0}-1\detm{1&1\\2&0}+1\detm{1&0\\2&1}\right]
+\end{aligned}
+\]
+\end{frame}
+
+\begin{frame}[shrink=13]{Desarrollo completo de $D_x$: operaciones internas}
+\[
+\begin{aligned}
+D_x={}&95[(3-0)-0(6-0)+(4-1)]\\
+&-125[(3-0)-(6-0)+(4-1)]\\
+&+110[(0-2)-(3-1)+(2-0)]\\
+&-85[(0-1)-(0-2)+(1-0)]
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+D_x={}&95(6)-125(0)+110(-2)-85(2)\\
+D_x={}&570-0-220-170=\boxed{180}
+\end{aligned}
+\]
+
+\[
+x=\frac{D_x}{D}=\frac{180}{4}=\boxed{45}
+\]
+\end{frame}
+
+
 \begin{frame}[shrink=8]{Cálculo de $D_y$}
 Se reemplaza la columna de $y$ por $B$:
 \[
@@ -395,6 +451,60 @@ D_y=510-760+370-20=\boxed{100}
 y=\frac{D_y}{D}=\frac{100}{4}=\boxed{25}
 \]
 \end{frame}
+
+% Desarrollo completo agregado para explicar de dónde sale el valor de Dy.
+\begin{frame}[shrink=10]{Desarrollo completo de $D_y$: expansión por cofactores}
+Se reemplaza la columna de $y$ por el vector $B$:
+\[
+D_y=\detm{
+1&95&1&1\\
+2&125&0&1\\
+1&110&1&0\\
+0&85&2&3}
+\]
+
+Se expande por la primera columna:
+\[
+\begin{aligned}
+D_y={}&1\detm{125&0&1\\110&1&0\\85&2&3}
+-2\detm{95&1&1\\110&1&0\\85&2&3}\\
+&+1\detm{95&1&1\\125&0&1\\85&2&3}
+-0\detm{95&1&1\\125&0&1\\110&1&0}
+\end{aligned}
+\]
+\end{frame}
+
+\begin{frame}[shrink=17]{Desarrollo completo de $D_y$: menores $3\times3$}
+\[
+\begin{aligned}
+D_y={}&1\left[125\detm{1&0\\2&3}-110\detm{0&1\\2&3}+85\detm{0&1\\1&0}\right]\\
+&-2\left[95\detm{1&0\\2&3}-110\detm{1&1\\2&3}+85\detm{1&1\\1&0}\right]\\
+&+1\left[95\detm{0&1\\2&3}-125\detm{1&1\\2&3}+85\detm{1&1\\0&1}\right]
+\end{aligned}
+\]
+\end{frame}
+
+\begin{frame}[shrink=13]{Desarrollo completo de $D_y$: operaciones internas}
+\[
+\begin{aligned}
+D_y={}&125(3-0)-110(0-2)+85(0-1)\\
+&-2[95(3-0)-110(3-2)+85(0-1)]\\
+&+95(0-2)-125(3-2)+85(1-0)
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+D_y={}&375+220-85-2[285-110-85]-190-125+85\\
+D_y={}&510-2(90)-230=510-180-230=\boxed{100}
+\end{aligned}
+\]
+
+\[
+y=\frac{D_y}{D}=\frac{100}{4}=\boxed{25}
+\]
+\end{frame}
+
 
 \begin{frame}[shrink=8]{Cálculo de $D_z$}
 Se reemplaza la columna de $z$ por $B$:
@@ -419,6 +529,62 @@ z=\frac{D_z}{D}=\frac{60}{4}=\boxed{15}
 \]
 \end{frame}
 
+% Desarrollo completo agregado para explicar de dónde sale el valor de Dz.
+\begin{frame}[shrink=10]{Desarrollo completo de $D_z$: expansión por cofactores}
+Se reemplaza la columna de $z$ por el vector $B$:
+\[
+D_z=\detm{
+1&1&95&1\\
+2&1&125&1\\
+1&2&110&0\\
+0&1&85&3}
+\]
+
+Se expande por la primera fila:
+\[
+\begin{aligned}
+D_z={}&1\detm{1&125&1\\2&110&0\\1&85&3}
+-1\detm{2&125&1\\1&110&0\\0&85&3}\\
+&+95\detm{2&1&1\\1&2&0\\0&1&3}
+-1\detm{2&1&125\\1&2&110\\0&1&85}
+\end{aligned}
+\]
+\end{frame}
+
+\begin{frame}[shrink=16]{Desarrollo completo de $D_z$: menores $3\times3$}
+\[
+\begin{aligned}
+D_z={}&\left[1\detm{110&0\\85&3}-2\detm{125&1\\85&3}+1\detm{125&1\\110&0}\right]\\
+&-\left[2\detm{110&0\\85&3}-1\detm{125&1\\85&3}+0\detm{125&1\\110&0}\right]\\
+&+95\left[2\detm{2&0\\1&3}-1\detm{1&0\\0&3}+1\detm{1&2\\0&1}\right]\\
+&-\left[2\detm{2&110\\1&85}-1\detm{1&110\\0&85}+125\detm{1&2\\0&1}\right]
+\end{aligned}
+\]
+\end{frame}
+
+\begin{frame}[shrink=13]{Desarrollo completo de $D_z$: operaciones internas}
+\[
+\begin{aligned}
+D_z={}&[330-2(375-85)+(0-110)]\\
+&-[2(330)-1(375-85)+0]\\
+&+95[2(6)-1(3)+1(1)]\\
+&-[2(170-110)-1(85-0)+125(1)]
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+D_z={}&(-360)-370+95(10)-160\\
+D_z={}&-360-370+950-160=\boxed{60}
+\end{aligned}
+\]
+
+\[
+z=\frac{D_z}{D}=\frac{60}{4}=\boxed{15}
+\]
+\end{frame}
+
+
 \begin{frame}[shrink=8]{Cálculo de $D_w$}
 Se reemplaza la columna de $w$ por $B$:
 \[
@@ -441,6 +607,62 @@ D_w=240+20+160-380=\boxed{40}
 w=\frac{D_w}{D}=\frac{40}{4}=\boxed{10}
 \]
 \end{frame}
+
+% Desarrollo completo agregado para explicar de dónde sale el valor de Dw.
+\begin{frame}[shrink=10]{Desarrollo completo de $D_w$: expansión por cofactores}
+Se reemplaza la columna de $w$ por el vector $B$:
+\[
+D_w=\detm{
+1&1&1&95\\
+2&1&0&125\\
+1&2&1&110\\
+0&1&2&85}
+\]
+
+Se expande por la primera fila:
+\[
+\begin{aligned}
+D_w={}&1\detm{1&0&125\\2&1&110\\1&2&85}
+-1\detm{2&0&125\\1&1&110\\0&2&85}\\
+&+1\detm{2&1&125\\1&2&110\\0&1&85}
+-95\detm{2&1&0\\1&2&1\\0&1&2}
+\end{aligned}
+\]
+\end{frame}
+
+\begin{frame}[shrink=16]{Desarrollo completo de $D_w$: menores $3\times3$}
+\[
+\begin{aligned}
+D_w={}&\left[1\detm{1&110\\2&85}-2\detm{0&125\\2&85}+1\detm{0&125\\1&110}\right]\\
+&-\left[2\detm{1&110\\2&85}-1\detm{0&125\\2&85}+0\detm{0&125\\1&110}\right]\\
+&+\left[2\detm{2&110\\1&85}-1\detm{1&110\\0&85}+125\detm{1&2\\0&1}\right]\\
+&-95\left[2\detm{2&1\\1&2}-1\detm{1&1\\0&2}+0\detm{1&2\\0&1}\right]
+\end{aligned}
+\]
+\end{frame}
+
+\begin{frame}[shrink=13]{Desarrollo completo de $D_w$: operaciones internas}
+\[
+\begin{aligned}
+D_w={}&[(85-220)-2(0-250)+(0-125)]\\
+&-[2(85-220)-1(0-250)+0]\\
+&+[2(170-110)-1(85-0)+125(1)]\\
+&-95[2(4-1)-1(2-0)+0]
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+D_w={}&240-(-20)+160-95(4)\\
+D_w={}&240+20+160-380=\boxed{40}
+\end{aligned}
+\]
+
+\[
+w=\frac{D_w}{D}=\frac{40}{4}=\boxed{10}
+\]
+\end{frame}
+
 
 \begin{frame}{Resumen de determinantes}
 \begin{table}
