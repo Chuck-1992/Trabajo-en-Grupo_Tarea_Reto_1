@@ -29,7 +29,7 @@
 \usefonttheme[onlymath]{serif}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{caption}[numbered]
-\definecolor{azulPUCE}{RGB}{0,78,128}
+\definecolor{azulPUCE}{RGB}{7,50,136}
 \definecolor{celesteSuave}{RGB}{220,237,247}
 \definecolor{verdeAcceso}{RGB}{54,150,135}
 \setbeamercolor{structure}{fg=azulPUCE}
@@ -55,6 +55,9 @@ Docente: PhD. Juan Carlos Osorio López
 }
 \date[07/06/2026]{Quito, 07 de junio de 2026}
 
+% Logotipo de la PUCE: se mostrará únicamente en la carátula.
+\titlegraphic{\vspace{0.25cm}\includegraphics[width=0.31\paperwidth]{puce_logo_transparente.png}}
+
 \hypersetup{
   pdftitle={Método de Resolución: Determinantes},
   pdfauthor={Carlos Miguel Ramos Bravo},
@@ -65,9 +68,18 @@ Docente: PhD. Juan Carlos Osorio López
 \begin{document}
 
 % Portada
-\begin{frame}
+% Fondo azul PUCE y logotipo solo en la carátula.
+{
+\setbeamercolor{background canvas}{bg=azulPUCE}
+\setbeamercolor{title}{fg=white,bg=azulPUCE}
+\setbeamercolor{subtitle}{fg=white}
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{institute}{fg=white}
+\setbeamercolor{date}{fg=white}
+\begin{frame}[plain]
 \titlepage
 \end{frame}
+}
 
 \begin{frame}{Contenido}
 \tableofcontents
@@ -610,35 +622,49 @@ El modelo ayuda a convertir reportes combinados en datos concretos para tomar de
 \end{itemize}
 \end{frame}
 
-% ---------------------------------------------------------
-\section{Referencias}
-% ---------------------------------------------------------
 
-\begin{frame}[shrink=12]{Referencias}
-\footnotesize
-\begin{thebibliography}{9}
+\begin{frame}[shrink=22]{Referencias}
+\tiny
+\setlength{\itemsep}{1pt}
+\setlength{\parskip}{0pt}
+\begin{thebibliography}{99}
 
 \bibitem{arias}
-Arias García, A. (2020). \textit{Menores y cofactores}. Totumat. \url{https://totumat.com/2020/06/19/menores-y-cofactores/}
+Arias García, A. (2020). \textit{Menores y cofactores}. Totumat. 
+\url{https://totumat.com/2020/06/19/menores-y-cofactores/}
+
+\bibitem{chuck1}
+Chuck-1992. (2026a). \textit{Sistema-de-Ecuaciones}. GitHub. 
+\url{https://github.com/Chuck-1992/Sistema-de-Ecuaciones}
+
+\bibitem{chuck2}
+Chuck-1992. (2026b). \textit{Trabajo-en-Grupo\_Tarea\_Reto\_1}. GitHub. 
+\url{https://github.com/Chuck-1992/Trabajo-en-Grupo_Tarea_Reto_1}
 
 \bibitem{pacheco}
-Pacheco Pinilla, C. M., \& López Hernández, L. S. (2023). \textit{Sistemas de ecuaciones: método de los determinantes}. Ediciones Universidad Cooperativa de Colombia. \url{https://repository.ucc.edu.co/server/api/core/bitstreams/8c50a0e0-a92e-486e-9845-e650f1fd590b/content}
+Pacheco Pinilla, C. M., \& López Hernández, L. S. (2023). 
+\textit{Sistemas de ecuaciones: método de los determinantes}. 
+Ediciones Universidad Cooperativa de Colombia. 
+\url{https://repository.ucc.edu.co/server/api/core/bitstreams/8c50a0e0-a92e-486e-9845-e650f1fd590b/content}
 
 \bibitem{puce}
-Pontificia Universidad Católica del Ecuador. (2025). \textit{Álgebra Lineal Geo Analítica V}. PUCE Virtual.
+Pontificia Universidad Católica del Ecuador. (2025). 
+\textit{Álgebra Lineal Geo Analítica V - P1076-Teórico-Práctico-N0172-05-N01}. 
+PUCE Virtual. 
+\url{https://eva.puce.edu.ec/EV-2025/course/view.php?id=559&section=3}
 
 \bibitem{ruiz}
-Ruiz Bermejo, C. (2021). \textit{Álgebra lineal: la regla de Cramer}. Universidad Complutense de Madrid. \url{https://blogs.mat.ucm.es/cruizb/wp-content/uploads/sites/48/2021/05/AL-Sistemas-Lineales-1.pdf}
+Ruiz Bermejo, C. (2021). 
+\textit{Álgebra lineal: la regla de Cramer}. 
+Web Personal de César Ruiz Bermejo / Universidad Complutense de Madrid. 
+\url{https://blogs.mat.ucm.es/cruizb/wp-content/uploads/sites/48/2021/05/AL-Sistemas-Lineales-1.pdf}
 
 \end{thebibliography}
 \end{frame}
 
 \begin{frame}
 \centering
-\Huge Gracias
-
-\vspace{0.4cm}
-\Large ¿Preguntas?
+\Huge Gracias por su atención
 \end{frame}
 
 \end{document}
