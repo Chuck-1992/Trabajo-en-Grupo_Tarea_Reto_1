@@ -1,0 +1,644 @@
+
+% -----------------------------------------------------------------------
+% Método de Resolución por Determinantes aplicado a ciberseguridad 
+% y control de acceso.
+% -----------------------------------------------------------------------
+
+\documentclass[aspectratio=169]{beamer}
+
+% Carga de paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{ragged2e}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% Configuración gráfica para el tema
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+
+% Estilos para el Tema de la presentación
+\usetheme{Madrid}
+\usefonttheme[onlymath]{serif}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
+\definecolor{azulPUCE}{RGB}{0,78,128}
+\definecolor{celesteSuave}{RGB}{220,237,247}
+\definecolor{verdeAcceso}{RGB}{54,150,135}
+\setbeamercolor{structure}{fg=azulPUCE}
+\setbeamercolor{title}{fg=white,bg=azulPUCE}
+\setbeamercolor{frametitle}{fg=white,bg=azulPUCE}
+\setbeamercolor{block title}{fg=white,bg=azulPUCE}
+\setbeamercolor{block body}{bg=celesteSuave!55}
+\setbeamercolor{alertblock title}{fg=white,bg=red!65!black}
+\setbeamercolor{alertblock body}{bg=red!8}
+
+% Atajos para escribir matrices y determinantes
+\newcommand{\mat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\detm}[1]{\begin{vmatrix}#1\end{vmatrix}}
+
+% Datos para la portada de la presentación
+\title[Método de Resolución: Determinantes]{Método de Resolución: Determinantes}
+\subtitle{Determinantes, menores, cofactores y Regla de Cramer en un sistema lineal \texorpdfstring{$4\times4$}{4x4}}
+\author[Carlos Miguel Ramos Bravo]{Carlos Miguel Ramos Bravo}
+\institute[]{%
+Ciberseguridad y Gestión de las Tecnologías de la Información\\
+Álgebra Lineal y Geometría Analítica\\
+Docente: PhD. Juan Carlos Osorio López
+}
+\date[07/06/2026]{Quito, 07 de junio de 2026}
+
+\hypersetup{
+  pdftitle={Método de Resolución: Determinantes},
+  pdfauthor={Carlos Miguel Ramos Bravo},
+  pdfsubject={Regla de Cramer aplicada a un sistema lineal 4x4},
+  pdfkeywords={determinantes, cofactores, menores, regla de Cramer, algebra lineal, ciberseguridad}
+}
+
+\begin{document}
+
+% Portada
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Contenido}
+\tableofcontents
+\end{frame}
+
+% ---------------------------------------------------------
+\section{Contexto y objetivo}
+% ---------------------------------------------------------
+
+\begin{frame}{Objetivo de la actividad}
+\begin{itemize}
+    \item Calcular determinantes de orden $2\times2$, $3\times3$ y $4\times4$.
+    \item Comprender el uso de menores y cofactores.
+    \item Aplicar la Regla de Cramer para resolver un sistema lineal.
+    \item Interpretar la solución en un caso aplicado a ingeniería y ciberseguridad.
+\end{itemize}
+
+\begin{block}{Idea central}
+Si el determinante principal cumple $D\neq0$, el sistema tiene solución única y puede resolverse mediante la Regla de Cramer.
+\end{block}
+\end{frame}
+
+\begin{frame}{Problema aplicado: control de acceso}
+\justifying
+En un laboratorio de computación se registran eventos de acceso. El sistema no entrega directamente el número de cada evento, sino reportes combinados. Por eso se plantea un sistema lineal con cuatro incógnitas.
+
+\vspace{0.25cm}
+\begin{table}
+\centering
+\begin{tabular}{cclc}
+\toprule
+\# & Variable & Significado & Unidad \\
+\midrule
+1 & $x$ & Accesos correctos & eventos \\
+2 & $y$ & Contraseñas incorrectas & eventos \\
+3 & $z$ & Bloqueos del sistema & eventos \\
+4 & $w$ & Accesos remotos & eventos \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{alertblock}{Pregunta guía}
+¿Cuántos eventos de cada tipo ocurrieron durante la jornada analizada?
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Recopilación de datos del sistema}
+\begin{table}
+\centering
+\scriptsize
+\begin{tabular}{clp{8.7cm}}
+\toprule
+\# & Reporte & Interpretación \\
+\midrule
+1 & $x+y+z+w=95$ & Total general de eventos registrados. \\
+2 & $2x+y+w=125$ & Reporte ponderado donde los accesos correctos tienen doble peso. \\
+3 & $x+2y+z=110$ & Reporte ponderado donde las contraseñas incorrectas tienen doble peso. \\
+4 & $y+2z+3w=85$ & Reporte ponderado donde los bloqueos y accesos remotos tienen mayor peso. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{block}{Utilidad del modelo}
+Los reportes combinados se transforman en ecuaciones. Así se puede encontrar la cantidad real de cada evento.
+\end{block}
+\end{frame}
+
+\begin{frame}{Sistema de ecuaciones lineales}
+\[
+\begin{cases}
+x+y+z+w=95 \\
+2x+y+w=125 \\
+x+2y+z=110 \\
+y+2z+3w=85
+\end{cases}
+\]
+
+\begin{block}{Lectura del sistema}
+Cada ecuación representa una forma distinta de contar o ponderar los eventos del laboratorio.
+\end{block}
+\end{frame}
+
+\begin{frame}{Forma matricial}
+El sistema se expresa como $A\cdot X=B$:
+
+\[
+A=\mat{
+1&1&1&1\\
+2&1&0&1\\
+1&2&1&0\\
+0&1&2&3}
+\qquad
+X=\mat{x\\y\\z\\w}
+\qquad
+B=\mat{95\\125\\110\\85}
+\]
+
+\begin{alertblock}{Condición para Cramer}
+Antes de resolver, se calcula $D=\det(A)$. Si $D\neq0$, existe una única solución.
+\end{alertblock}
+\end{frame}
+
+% ---------------------------------------------------------
+\section{Determinantes, menores y cofactores}
+% ---------------------------------------------------------
+
+\begin{frame}{Determinante de orden $2\times2$}
+Para una matriz de orden $2\times2$:
+\[
+\detm{a&b\\c&d}=ad-bc
+\]
+
+\begin{exampleblock}{Ejemplo}
+\[
+\detm{3&1\\2&4}=3(4)-1(2)=12-2=10
+\]
+\end{exampleblock}
+
+\begin{block}{Importancia}
+Los determinantes $2\times2$ aparecen dentro del cálculo de determinantes $3\times3$ y $4\times4$.
+\end{block}
+\end{frame}
+
+\begin{frame}{Determinante de orden $3\times3$}
+Para una matriz $3\times3$ se puede expandir por una fila o columna:
+\[
+\detm{a&b&c\\d&e&f\\g&h&i}
+=a\detm{e&f\\h&i}-b\detm{d&f\\g&i}+c\detm{d&e\\g&h}
+\]
+
+\begin{exampleblock}{Ejemplo breve}
+\[
+\detm{1&0&1\\2&1&0\\1&2&3}
+=1\detm{1&0\\2&3}+1\detm{2&1\\1&2}=3+3=6
+\]
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Menores y cofactores}
+\begin{block}{Menor $M_{ij}$}
+Es el determinante que queda al eliminar la fila $i$ y la columna $j$ de un elemento de la matriz.
+\end{block}
+
+\begin{block}{Cofactor $C_{ij}$}
+El cofactor es el menor con el signo correspondiente:
+\[
+C_{ij}=(-1)^{i+j}M_{ij}
+\]
+\end{block}
+
+\begin{exampleblock}{Patrón de signos}
+\[
+\mat{+&-&+&-\\-&+&-&+\\+&-&+&-\\-&+&-&+}
+\]
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[shrink=5]{Ejemplo de menor y cofactor en la tercera fila}
+Tomando como referencia el elemento $a_{31}=1$ de la matriz $A$:
+
+\[
+A=\mat{
+1&1&1&1\\
+2&1&0&1\\
+\color{azulPUCE}{1}&2&1&0\\
+0&1&2&3}
+\]
+
+Se elimina la fila 3 y la columna 1:
+\[
+M_{31}=\detm{1&1&1\\1&0&1\\1&2&3}=-2
+\]
+
+Como la posición es $(3,1)$:
+\[
+C_{31}=(-1)^{3+1}M_{31}=1(-2)=\boxed{-2}
+\]
+\end{frame}
+
+\begin{frame}[shrink=8]{Determinante principal $D$}
+\[
+D=\det(A)=
+\detm{
+1&1&1&1\\
+2&1&0&1\\
+1&2&1&0\\
+0&1&2&3}
+\]
+
+Expansión por la primera fila:
+\[
+D=1M_{11}-1M_{12}+1M_{13}-1M_{14}
+\]
+
+\begin{block}{Menores necesarios}
+\[
+M_{11}=6,\qquad M_{12}=8,\qquad M_{13}=10,\qquad M_{14}=4
+\]
+\end{block}
+
+\[
+D=6-8+10-4=\boxed{4}
+\]
+\end{frame}
+
+\begin{frame}[shrink=6]{Cálculo del menor $M_{11}$}
+Se elimina la fila 1 y la columna 1:
+\[
+M_{11}=\detm{1&0&1\\2&1&0\\1&2&3}
+\]
+
+\[
+M_{11}=1\detm{1&0\\2&3}-0\detm{2&0\\1&3}+1\detm{2&1\\1&2}
+\]
+
+\[
+M_{11}=1[(1)(3)-(0)(2)]+1[(2)(2)-(1)(1)]
+\]
+
+\[
+M_{11}=3+3=\boxed{6}
+\]
+\end{frame}
+
+\begin{frame}[shrink=8]{Cálculo de $M_{12}$, $M_{13}$ y $M_{14}$}
+\[
+M_{12}=\detm{2&0&1\\1&1&0\\0&2&3}=\boxed{8}
+\]
+
+\[
+M_{13}=\detm{2&1&1\\1&2&0\\0&1&3}=\boxed{10}
+\]
+
+\[
+M_{14}=\detm{2&1&0\\1&2&1\\0&1&2}=\boxed{4}
+\]
+
+\begin{alertblock}{Resultado importante}
+Como $D=4\neq0$, el sistema tiene solución única y se puede aplicar la Regla de Cramer.
+\end{alertblock}
+\end{frame}
+
+% ---------------------------------------------------------
+\section{Regla de Cramer}
+% ---------------------------------------------------------
+
+\begin{frame}{Proceso de resolución con Cramer}
+\begin{center}
+\begin{tikzpicture}[
+node distance=0.9cm and 1.05cm,
+box/.style={rectangle,rounded corners,draw=azulPUCE,very thick,fill=celesteSuave,align=center,minimum width=2.2cm,minimum height=0.75cm,font=\small},
+arrow/.style={-{Latex[length=3mm]},very thick,azulPUCE}
+]
+\node[box] (a) {Sistema\\lineal};
+\node[box,right=of a] (b) {Matriz\\$A$ y $B$};
+\node[box,right=of b] (c) {Calcular\\$D$};
+\node[box,below=of b] (d) {Calcular\\$D_x,D_y,D_z,D_w$};
+\node[box,right=of d] (e) {Dividir\\por $D$};
+\draw[arrow] (a) -- (b);
+\draw[arrow] (b) -- (c);
+\draw[arrow] (c) |- (d);
+\draw[arrow] (d) -- (e);
+\end{tikzpicture}
+\end{center}
+
+\[
+x=\frac{D_x}{D},\qquad y=\frac{D_y}{D},\qquad z=\frac{D_z}{D},\qquad w=\frac{D_w}{D}
+\]
+\end{frame}
+
+\begin{frame}[shrink=6]{Cálculo de $D_x$}
+Se reemplaza la columna de $x$ por $B$:
+\[
+D_x=\detm{
+95&1&1&1\\
+125&1&0&1\\
+110&2&1&0\\
+85&1&2&3}
+\]
+
+\[
+D_x=95(6)-1(510)+1(360)-1(240)
+\]
+
+\[
+D_x=570-510+360-240=\boxed{180}
+\]
+
+\[
+x=\frac{D_x}{D}=\frac{180}{4}=\boxed{45}
+\]
+\end{frame}
+
+\begin{frame}[shrink=8]{Cálculo de $D_y$}
+Se reemplaza la columna de $y$ por $B$:
+\[
+D_y=\detm{
+1&95&1&1\\
+2&125&0&1\\
+1&110&1&0\\
+0&85&2&3}
+\]
+
+\[
+D_y=1(510)-95(8)+1(370)-1(20)
+\]
+
+\[
+D_y=510-760+370-20=\boxed{100}
+\]
+
+\[
+y=\frac{D_y}{D}=\frac{100}{4}=\boxed{25}
+\]
+\end{frame}
+
+\begin{frame}[shrink=8]{Cálculo de $D_z$}
+Se reemplaza la columna de $z$ por $B$:
+\[
+D_z=\detm{
+1&1&95&1\\
+2&1&125&1\\
+1&2&110&0\\
+0&1&85&3}
+\]
+
+\[
+D_z=1(-360)-1(370)+95(10)-1(160)
+\]
+
+\[
+D_z=-360-370+950-160=\boxed{60}
+\]
+
+\[
+z=\frac{D_z}{D}=\frac{60}{4}=\boxed{15}
+\]
+\end{frame}
+
+\begin{frame}[shrink=8]{Cálculo de $D_w$}
+Se reemplaza la columna de $w$ por $B$:
+\[
+D_w=\detm{
+1&1&1&95\\
+2&1&0&125\\
+1&2&1&110\\
+0&1&2&85}
+\]
+
+\[
+D_w=1(240)-1(-20)+1(160)-95(4)
+\]
+
+\[
+D_w=240+20+160-380=\boxed{40}
+\]
+
+\[
+w=\frac{D_w}{D}=\frac{40}{4}=\boxed{10}
+\]
+\end{frame}
+
+\begin{frame}{Resumen de determinantes}
+\begin{table}
+\centering
+\begin{tabular}{clcc}
+\toprule
+\# & Determinante & Columna reemplazada & Valor \\
+\midrule
+1 & $D$ & Ninguna & $4$ \\
+2 & $D_x$ & Columna de $x$ por $B$ & $180$ \\
+3 & $D_y$ & Columna de $y$ por $B$ & $100$ \\
+4 & $D_z$ & Columna de $z$ por $B$ & $60$ \\
+5 & $D_w$ & Columna de $w$ por $B$ & $40$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\[
+(x,y,z,w)=\left(\frac{180}{4},\frac{100}{4},\frac{60}{4},\frac{40}{4}\right)
+\]
+\end{frame}
+
+\begin{frame}{Solución del sistema}
+\[
+x=45,\qquad y=25,\qquad z=15,\qquad w=10
+\]
+
+\begin{alertblock}{Respuesta final}
+Durante la jornada se registraron 45 accesos correctos, 25 contraseñas incorrectas, 15 bloqueos y 10 accesos remotos.
+\end{alertblock}
+
+\begin{table}
+\centering
+\begin{tabular}{clc}
+\toprule
+Variable & Evento & Cantidad \\
+\midrule
+$x$ & Accesos correctos & 45 \\
+$y$ & Contraseñas incorrectas & 25 \\
+$z$ & Bloqueos del sistema & 15 \\
+$w$ & Accesos remotos & 10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+
+% ---------------------------------------------------------
+\section{Verificación, gráficos e interpretación}
+% ---------------------------------------------------------
+
+\begin{frame}[shrink=5]{Verificación por sustitución}
+Se reemplazan los valores en el sistema original:
+
+\[
+45+25+15+10=95\quad \checkmark
+\]
+\[
+2(45)+25+10=125\quad \checkmark
+\]
+\[
+45+2(25)+15=110\quad \checkmark
+\]
+\[
+25+2(15)+3(10)=85\quad \checkmark
+\]
+
+\begin{block}{Conclusión}
+Los valores encontrados satisfacen todas las ecuaciones originales.
+\end{block}
+\end{frame}
+
+\begin{frame}[shrink=8]{Verificación alternativa: eliminación de Gauss}
+También se puede verificar con la matriz aumentada:
+\[
+\left[\begin{array}{cccc|c}
+1&1&1&1&95\\
+2&1&0&1&125\\
+1&2&1&0&110\\
+0&1&2&3&85
+\end{array}\right]
+\longrightarrow
+\left[\begin{array}{cccc|c}
+1&0&0&0&45\\
+0&1&0&0&25\\
+0&0&1&0&15\\
+0&0&0&1&10
+\end{array}\right]
+\]
+
+\begin{block}{Comparación}
+El método alternativo confirma la misma solución obtenida por la Regla de Cramer.
+\end{block}
+\end{frame}
+
+\begin{frame}[shrink=6]{Gráfico de resultados}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    width=0.9\textwidth,
+    height=0.55\textheight,
+    ymin=0,
+    ymax=50,
+    ylabel={Cantidad de eventos},
+    symbolic x coords={Correctos,Incorrectos,Bloqueos,Remotos},
+    xtick=data,
+    nodes near coords,
+    bar width=22pt,
+    enlarge x limits=0.18,
+    grid=major,
+    tick label style={font=\small},
+    label style={font=\small},
+    fill=verdeAcceso!75
+]
+\addplot coordinates {(Correctos,45) (Incorrectos,25) (Bloqueos,15) (Remotos,10)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{block}{Lectura rápida}
+El evento más frecuente son los accesos correctos. Sin embargo, los intentos incorrectos y bloqueos deben revisarse por seguridad.
+\end{block}
+\end{frame}
+
+\begin{frame}[shrink=6]{Distribución porcentual}
+Total de eventos:
+\[
+45+25+15+10=95
+\]
+
+\begin{table}
+\centering
+\begin{tabular}{lcc}
+\toprule
+Evento & Cantidad & Porcentaje aproximado \\
+\midrule
+Accesos correctos & 45 & $47.37\%$ \\
+Contraseñas incorrectas & 25 & $26.32\%$ \\
+Bloqueos & 15 & $15.79\%$ \\
+Accesos remotos & 10 & $10.53\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{alertblock}{Interpretación}
+Más de una cuarta parte de los eventos corresponde a contraseñas incorrectas; por eso conviene revisar políticas de autenticación y capacitación de usuarios.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Análisis práctico en ciberseguridad}
+\begin{itemize}
+    \item $x=45$: actividad normal de usuarios autorizados.
+    \item $y=25$: posibles errores de usuario o intentos repetidos de acceso.
+    \item $z=15$: bloqueos que pueden indicar uso incorrecto de credenciales.
+    \item $w=10$: accesos remotos que deben validarse por IP, horario y permisos.
+\end{itemize}
+
+\begin{block}{Aplicación real}
+El modelo ayuda a convertir reportes combinados en datos concretos para tomar decisiones de monitoreo y seguridad.
+\end{block}
+\end{frame}
+
+\begin{frame}{Optimización del cálculo}
+\begin{itemize}
+    \item En matrices $4\times4$, conviene expandir por filas o columnas con ceros.
+    \item La Regla de Cramer es clara para explicar el procedimiento, pero se vuelve extensa en sistemas grandes.
+    \item Para sistemas mayores, se recomienda usar eliminación de Gauss, Gauss-Jordan o software matemático.
+    \item El determinante sigue siendo útil porque indica si existe una solución única.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusiones}
+\begin{itemize}
+    \item Se planteó un sistema lineal $4\times4$ aplicado al control de acceso de un laboratorio.
+    \item Se calcularon determinantes usando menores y cofactores.
+    \item Como $D=4\neq0$, el sistema tiene solución única.
+    \item La Regla de Cramer permitió obtener $(45,25,15,10)$.
+    \item Los resultados ayudan a interpretar eventos de seguridad y apoyar la toma de decisiones.
+\end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------
+\section{Referencias}
+% ---------------------------------------------------------
+
+\begin{frame}[shrink=12]{Referencias}
+\footnotesize
+\begin{thebibliography}{9}
+
+\bibitem{arias}
+Arias García, A. (2020). \textit{Menores y cofactores}. Totumat. \url{https://totumat.com/2020/06/19/menores-y-cofactores/}
+
+\bibitem{pacheco}
+Pacheco Pinilla, C. M., \& López Hernández, L. S. (2023). \textit{Sistemas de ecuaciones: método de los determinantes}. Ediciones Universidad Cooperativa de Colombia. \url{https://repository.ucc.edu.co/server/api/core/bitstreams/8c50a0e0-a92e-486e-9845-e650f1fd590b/content}
+
+\bibitem{puce}
+Pontificia Universidad Católica del Ecuador. (2025). \textit{Álgebra Lineal Geo Analítica V}. PUCE Virtual.
+
+\bibitem{ruiz}
+Ruiz Bermejo, C. (2021). \textit{Álgebra lineal: la regla de Cramer}. Universidad Complutense de Madrid. \url{https://blogs.mat.ucm.es/cruizb/wp-content/uploads/sites/48/2021/05/AL-Sistemas-Lineales-1.pdf}
+
+\end{thebibliography}
+\end{frame}
+
+\begin{frame}
+\centering
+\Huge Gracias
+
+\vspace{0.4cm}
+\Large ¿Preguntas?
+\end{frame}
+
+\end{document}
